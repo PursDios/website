@@ -342,19 +342,26 @@
     border-top: 1px solid var(--line-soft);
   }
   .ideas h2 { margin-bottom: 16px; }
-  .ideas-list { list-style: none; margin-top: 32px; }
-  .ideas-list li {
-    padding: 16px 0;
-    border-bottom: 1px dashed var(--line-soft);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    font-family: var(--font-mono);
-    font-size: 13px;
+  .ideas-list {
+    list-style: none;
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
   }
-  .ideas-list li .name { color: var(--fg); }
-  .ideas-list li .note { color: var(--fg-mute); }
+  @media (max-width: 900px) { .ideas-list { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .ideas-list { grid-template-columns: 1fr; } }
+  .ideas-list li {
+    padding: 16px;
+    border: 1px dashed var(--line-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .ideas-list li .name { color: var(--fg); line-height: 1.5; }
+  .ideas-list li .note { color: var(--fg-mute); font-size: 11px; }
 </style>
 </head>
 <body>
@@ -401,10 +408,9 @@
         Also because laying out 9 cards in CSS grid is genuinely satisfying.
       </p>
       <div class="stack">
-        <span class="tag">Laravel</span>
-        <span class="tag">Livewire</span>
-        <span class="tag">Alpine.js</span>
-        <span class="tag">Tailwind</span>
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">JavaScript</span>
       </div>
       <div class="actions">
         <a href="#" class="btn primary">Open Harrowing →</a>
@@ -483,10 +489,10 @@
     </div>
   </article>
 
-  <article class="project" id="lolbuy" data-status="joke planned">
+  <article class="project" id="lolbuy" data-status="joke wip">
     <div>
       <div class="project-meta">
-        <span><span class="dot planned"></span> planned / very silly</span>
+        <span><span class="dot wip"></span> in progress / very silly</span>
         <span>/ 03</span>
         <span>e-commerce · dark patterns · satire</span>
       </div>
@@ -502,10 +508,10 @@
         Mostly useful as a laugh.
       </p>
       <div class="stack">
-        <span class="tag">Vue 3</span>
-        <span class="tag">Vite</span>
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">JavaScript</span>
         <span class="tag">Intentional chaos</span>
-        <span class="tag">A11y lecture notes</span>
       </div>
       <div class="actions">
         <a href="#" class="btn">Wishlist of sins →</a>
@@ -555,14 +561,7 @@
     <span class="kicker">Parking lot</span>
     <h2 style="margin-top: 16px;">Ideas I haven't committed to yet.</h2>
     <p style="margin-top: 16px;">Half of these will never happen. A few of them will suddenly happen next Tuesday.</p>
-    <ul class="ideas-list">
-      <li><span class="name">— an app that rates how likely your meeting could've been an email</span><span class="note">weapon // 7d effort</span></li>
-      <li><span class="name">— a d20 that's legally required to roll a 20 once per session</span><span class="note">contraband // TBD</span></li>
-      <li><span class="name">— microwave that swears at you when you stop it at 00:01</span><span class="note">hardware // don't ask</span></li>
-      <li><span class="name">— a Chrome extension that replaces every "synergy" with "smooch"</span><span class="note">public service // done on a train</span></li>
-      <li><span class="name">— therapy chatbot that only quotes Stellaris flavour text</span><span class="note">spiritual warfare // questionable</span></li>
-      <li><span class="name">— a RimWorld colony simulator for planning my actual week</span><span class="note">probably cursed // inevitable</span></li>
-    </ul>
+    <ul class="ideas-list" id="ideas-list"></ul>
   </div>
 
   <div style="padding: 60px 0 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
@@ -576,6 +575,44 @@
 <script src="shared.js"></script>
 <script>
   mountLayout('projects');
+
+  const IDEAS = [
+    { name: "an app that rates how likely your meeting could've been an email", note: "weapon // 7d effort" },
+    { name: "a d20 that's legally required to roll a 20 once per session", note: "contraband // TBD" },
+    { name: "microwave that swears at you when you stop it at 00:01", note: "hardware // don't ask" },
+    { name: "a Chrome extension that replaces every 'synergy' with 'smooch'", note: "public service // done on a train" },
+    { name: "therapy chatbot that only quotes Stellaris flavour text", note: "spiritual warfare // questionable" },
+    { name: "a RimWorld colony simulator for planning my actual week", note: "probably cursed // inevitable" },
+    { name: "auto email generator that turns 'per my last email' into passive-aggressive poetry", note: "cathartic // weekly need" },
+    { name: "countdown timer that plays dramatic orchestral music for every task", note: "focus tool // unhinged" },
+    { name: "Pathfinder spell lookup that also rates whether your GM will actually allow it", note: "essential // contested" },
+    { name: "app that generates plausible git commit messages when you've been staring for 3 hours", note: "tools // already needed" },
+    { name: "AI that reviews your PRs in the tone of a disappointed dungeon master", note: "code review // chaotic" },
+    { name: "habit tracker that uses DBD match stats to visualise your productivity", note: "metrics // questionable" },
+    { name: "fake company values generator indistinguishable from real ones", note: "satire // deeply real" },
+    { name: "sleep tracker that blames DBD when you got under 6 hours", note: "accurate // self-aware" },
+    { name: "browser extension that converts any LinkedIn post into plain English", note: "public service // sobering" },
+    { name: "app that generates meeting agendas where every point is the same point rephrased", note: "workflow // honest" },
+    { name: "Chrome extension that replaces 'rockstar developer' with a skull emoji", note: "safety // warranted" },
+    { name: "FoundryVTT module that rolls perception checks when players are on their phones", note: "GM tool // petty" },
+    { name: "Plex dashboard showing your 'actually watched vs added 3 years ago' guilt ratio", note: "media // sobering" },
+    { name: "alarm clock that makes you solve a Pathfinder skill check before it turns off", note: "tortuous // brilliant" },
+    { name: "site that generates realistic excuses for why the feature isn't done, indexed by sprint velocity", note: "agile // legally distinct" },
+    { name: "browser extension that adds a fake loading spinner to fast sites so you feel less bad", note: "cope // therapeutic" },
+    { name: "website that calculates your odds of surviving the first encounter in any TTRPG module you link", note: "doomed // statistically" },
+    { name: "playlist generator that matches BPM to your code's current error rate", note: "deranged // musical" },
+    { name: "app that tells you if your side project idea already exists and is wildly successful", note: "demotivational // accurate" },
+  ];
+  (function() {
+    const list = document.getElementById("ideas-list");
+    if (!list) return;
+    [...IDEAS].sort(() => Math.random() - 0.5).slice(0, 5).forEach(idea => {
+      const li = document.createElement("li");
+      li.innerHTML = `<span class="name">— ${idea.name}</span><span class="note">${idea.note}</span>`;
+      list.appendChild(li);
+    });
+  })();
+
   document.querySelectorAll("#filters .filter").forEach(btn => {
     btn.addEventListener("click", () => {
       document.querySelectorAll("#filters .filter").forEach(b => b.classList.remove("active"));
