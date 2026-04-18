@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ryan Cooper — Senior Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css" />
+<style>
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    padding-top: 40px;
+    padding-bottom: 80px;
+    min-height: 78vh;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 64px;
+    align-items: center;
+    border-top: 0;
+  }
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 32px; min-height: auto; }
+  }
+  .hero-copy .line-one {
+    display: block;
+    font-size: clamp(14px, 1.2vw, 16px);
+    font-family: var(--font-mono);
+    color: var(--fg-mute);
+    margin-bottom: 16px;
+    letter-spacing: 0.04em;
+  }
+  .hero h1 {
+    font-size: clamp(48px, 7.5vw, 104px);
+    line-height: 0.98;
+    margin-bottom: 24px;
+  }
+  .hero h1 .accent { color: var(--accent); font-style: italic; font-weight: 400; }
+  .hero .tag-line {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--fg-dim);
+    margin-bottom: 28px;
+    padding: 10px 0;
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .hero .tag-line::before {
+    content: "⌖";
+    color: var(--accent);
+  }
+  .hero .meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-mute);
+    letter-spacing: 0.04em;
+    margin-top: 40px;
+  }
+  .hero .meta span { display: flex; gap: 6px; }
+  .hero .meta span em { color: var(--fg); font-style: normal; }
+  .hero .meta span::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    align-self: center;
+    margin-right: 6px;
+  }
+
+  .hero-cta { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+
+  /* ---------- Hero art stage ---------- */
+  .hero-art {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    max-width: 440px;
+    justify-self: end;
+    border: 1px solid var(--line-soft);
+    background:
+      repeating-linear-gradient(0deg, transparent 0 39px, var(--line-soft) 39px 40px),
+      repeating-linear-gradient(90deg, transparent 0 39px, var(--line-soft) 39px 40px);
+  }
+  @media (max-width: 900px) {
+    .hero-art { justify-self: start; max-width: 360px; }
+  }
+  .hero-art .corner {
+    position: absolute;
+    width: 12px; height: 12px;
+    border: 1px solid var(--accent);
+  }
+  .hero-art .corner.tl { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+  .hero-art .corner.tr { top: -1px; right: -1px; border-left: 0; border-bottom: 0; }
+  .hero-art .corner.bl { bottom: -1px; left: -1px; border-right: 0; border-top: 0; }
+  .hero-art .corner.br { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+  .hero-art svg { width: 100%; height: 100%; display: block; }
+  .hero-art .art-label {
+    position: absolute;
+    bottom: 10px; left: 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--fg-mute);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .hero-art .art-label em { color: var(--accent); font-style: normal; }
+
+  /* ---------- Snippet strip ---------- */
+  .strip {
+    display: flex;
+    gap: 0;
+    margin-top: 40px;
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+    overflow: hidden;
+    position: relative;
+  }
+  .strip-track {
+    display: flex;
+    gap: 40px;
+    padding: 14px 0;
+    animation: scroll 40s linear infinite;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-mute);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .strip-track span em {
+    color: var(--accent);
+    font-style: normal;
+    margin-right: 8px;
+  }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ---------- Summary grid ---------- */
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 80px;
+    border-top: 1px solid var(--line-soft);
+  }
+  @media (max-width: 800px) {
+    .summary { grid-template-columns: repeat(2, 1fr); }
+  }
+  .summary-cell {
+    padding: 24px 20px;
+    border-right: 1px solid var(--line-soft);
+  }
+  .summary-cell:last-child { border-right: 0; }
+  @media (max-width: 800px) {
+    .summary-cell:nth-child(2) { border-right: 0; }
+    .summary-cell:nth-child(1), .summary-cell:nth-child(2) { border-bottom: 1px solid var(--line-soft); }
+  }
+  .summary-cell .k {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-mute);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .summary-cell .v {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--fg);
+  }
+  .summary-cell .v em { color: var(--accent); font-style: normal; }
+
+  /* ---------- Featured projects teaser ---------- */
+  .featured { margin-top: 120px; }
+  .project-row {
+    display: grid;
+    grid-template-columns: 60px 1fr auto auto;
+    gap: 24px;
+    align-items: center;
+    padding: 28px 0;
+    border-top: 1px solid var(--line-soft);
+    transition: padding 0.25s, background 0.25s;
+    cursor: pointer;
+  }
+  .project-row:last-child { border-bottom: 1px solid var(--line-soft); }
+  .project-row:hover { padding-left: 12px; padding-right: 12px; background: var(--bg-elev); }
+  .project-row .num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-mute);
+  }
+  .project-row .title {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 2.4vw, 28px);
+    font-weight: 500;
+    color: var(--fg);
+  }
+  .project-row .title small {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-mute);
+    font-weight: 400;
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+  .project-row .status {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-dim);
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+  }
+  .project-row .status.live { color: var(--accent); border-color: var(--accent); }
+  .project-row .arrow {
+    font-family: var(--font-mono);
+    color: var(--fg-mute);
+    transition: transform 0.2s, color 0.2s;
+  }
+  .project-row:hover .arrow { color: var(--accent); transform: translateX(6px); }
+  @media (max-width: 700px) {
+    .project-row { grid-template-columns: 40px 1fr; }
+    .project-row .status, .project-row .arrow { display: none; }
+  }
+
+  /* ---------- Closing ---------- */
+  .closer {
+    margin-top: 120px;
+    padding: 80px 0;
+    border-top: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: end;
+  }
+  @media (max-width: 700px) { .closer { grid-template-columns: 1fr; } }
+  .closer h2 { max-width: 14ch; }
+  .closer .right { color: var(--fg-dim); }
+  .closer .right p { margin-bottom: 24px; }
+
+  /* ---------- Cursor dice follower ---------- */
+  .cursor-dice {
+    position: fixed;
+    pointer-events: none;
+    width: 32px; height: 32px;
+    z-index: 40;
+    opacity: 0;
+    transition: opacity 0.3s;
+    mix-blend-mode: difference;
+  }
+  .cursor-dice.visible { opacity: 0.8; }
+</style>
+</head>
+<body>
+
+<div id="nav-slot"></div>
+
+<main class="shell">
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="line-one">Portfolio / v2026.04</span>
+      <h1>
+        Ryan<br/>
+        Cooper<span class="accent">.</span>
+      </h1>
+      <div class="tag-line">
+        Senior Software Engineer <span style="opacity:0.5; margin: 0 6px;">//</span> Professional Wizard.
+      </div>
+      <p class="lead">
+        I build small, useful things — usually late at night, usually after a D&amp;D session
+        has run three hours long. This site is where they live.
+      </p>
+      <div class="hero-cta">
+        <a href="projects.html" class="btn primary">
+          See the projects <span class="arrow">→</span>
+        </a>
+        <a href="contact.html" class="btn">
+          Get in touch <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <div class="meta">
+        <span>Based <em>Cambridgeshire</em></span>
+        <span>Stack <em>Laravel &amp; Livewire</em></span>
+        <span>Status <em>Open to chat</em></span>
+      </div>
+    </div>
+
+    <div class="hero-art" id="hero-art">
+      <span class="corner tl"></span><span class="corner tr"></span>
+      <span class="corner bl"></span><span class="corner br"></span>
+      <svg viewBox="0 0 400 400" id="hero-svg"></svg>
+      <div class="art-label">
+        <em>01</em> &nbsp; initiative roll — natural twenty
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="strip-track">
+      <span><em>◆</em>Builds small tools</span>
+      <span><em>◆</em>Runs a home-lab</span>
+      <span><em>◆</em>DM'd for 6 years</span>
+      <span><em>◆</em>FFXIV bard main</span>
+      <span><em>◆</em>Anime over 3AM</span>
+      <span><em>◆</em>Prefers dark mode</span>
+      <span><em>◆</em>Builds small tools</span>
+      <span><em>◆</em>Runs a home-lab</span>
+      <span><em>◆</em>DM'd for 6 years</span>
+      <span><em>◆</em>FFXIV bard main</span>
+      <span><em>◆</em>Anime over 3AM</span>
+      <span><em>◆</em>Prefers dark mode</span>
+    </div>
+  </div>
+
+  <div class="summary">
+    <div class="summary-cell">
+      <div class="k">Role</div>
+      <div class="v">Senior Engineer</div>
+    </div>
+    <div class="summary-cell">
+      <div class="k">Tinkering since</div>
+      <div class="v">Before it paid</div>
+    </div>
+    <div class="summary-cell">
+      <div class="k">Projects live</div>
+      <div class="v"><em>0</em> — yet.</div>
+    </div>
+    <div class="summary-cell">
+      <div class="k">Caffeine tier</div>
+      <div class="v">Sustainable</div>
+    </div>
+  </div>
+
+  <div class="featured">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Selected work</span>
+        <h2 style="margin-top: 12px;">Things I'm building.</h2>
+      </div>
+      <div class="index">03 / total</div>
+    </div>
+
+    <a href="projects.html#harrowing" class="project-row">
+      <div class="num">01</div>
+      <div class="title">Harrowing<small>pathfinder 1e harrow reader · laravel + livewire</small></div>
+      <div class="status">in progress</div>
+      <div class="arrow">→</div>
+    </a>
+    <a href="projects.html#bidding" class="project-row">
+      <div class="num">02</div>
+      <div class="title">biddingTest<small>auction mechanics · laravel</small></div>
+      <div class="status">planned</div>
+      <div class="arrow">→</div>
+    </a>
+    <a href="projects.html#lolbuy" class="project-row">
+      <div class="num">03</div>
+      <div class="title">LolBuy<small>e-commerce with every bad idea · vue</small></div>
+      <div class="status">planned</div>
+      <div class="arrow">→</div>
+    </a>
+  </div>
+
+  <div class="closer">
+    <h2>Still reading? Say hi.</h2>
+    <div class="right">
+      <p>
+        Most of what I make ends up as a subdomain on this site — a playground for ideas
+        that are too small for a company and too big for a notes app.
+      </p>
+      <div class="row">
+        <a href="contact.html" class="btn">contact →</a>
+        <a href="about.html" class="btn">about me →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="footer-slot"></div>
+
+<aside id="tweaks-panel" class="tweaks" aria-label="Tweaks"></aside>
+<div id="cursor-dice" class="cursor-dice"></div>
+
+<script src="assets/shared.js"></script>
+<script src="assets/hero.js"></script>
+<script>
+  mountLayout('home');
+</script>
+</body>
+</html>

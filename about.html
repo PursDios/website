@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>About — Ryan Cooper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css" />
+<style>
+  .page-head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding-top: 24px;
+    padding-bottom: 80px;
+    border-bottom: 1px solid var(--line-soft);
+    align-items: end;
+  }
+  @media (max-width: 800px) { .page-head { grid-template-columns: 1fr; gap: 24px; } }
+  .page-head h1 { font-size: clamp(48px, 7vw, 88px); }
+  .page-head h1 em { color: var(--accent); font-style: italic; font-weight: 400; }
+  .page-head .side {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-mute);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+  .page-head .side strong { color: var(--fg); font-weight: 400; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    padding: 80px 0;
+  }
+  @media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .about-grid .label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding-top: 8px;
+    border-top: 1px solid var(--accent);
+    align-self: start;
+  }
+  .about-grid .body p {
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--fg);
+    margin-bottom: 20px;
+    max-width: 56ch;
+  }
+  .about-grid .body p:last-child { margin-bottom: 0; }
+  .about-grid .body p.dim { color: var(--fg-dim); }
+
+  /* ---------- Facts grid ---------- */
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 80px 0;
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  @media (max-width: 700px) { .facts { grid-template-columns: 1fr; } }
+  .fact {
+    padding: 32px 24px;
+    border-right: 1px solid var(--line-soft);
+  }
+  .fact:last-child { border-right: 0; }
+  @media (max-width: 700px) {
+    .fact { border-right: 0; border-bottom: 1px solid var(--line-soft); }
+    .fact:last-child { border-bottom: 0; }
+  }
+  .fact .q {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-mute);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .fact .a {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--fg);
+    line-height: 1.25;
+  }
+  .fact .a em { color: var(--accent); font-style: normal; }
+
+  /* ---------- Timeline ---------- */
+  .timeline-wrap { padding: 80px 0 40px; }
+  .timeline-wrap .kicker { margin-bottom: 24px; }
+  .timeline-wrap h2 { margin-bottom: 48px; }
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+    border-left: 1px solid var(--line);
+  }
+  .tl-item {
+    padding: 0 0 40px 0;
+    position: relative;
+  }
+  .tl-item::before {
+    content: "";
+    position: absolute;
+    left: -46px;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    border: 1px solid var(--accent);
+    background: var(--bg);
+    transform: rotate(45deg);
+  }
+  .tl-item .year {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+  .tl-item .what {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--fg);
+    margin-bottom: 4px;
+  }
+  .tl-item .note {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--fg-dim);
+    max-width: 54ch;
+  }
+
+  /* ---------- Values ---------- */
+  .values {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 40px 0 80px;
+    border: 1px solid var(--line-soft);
+  }
+  @media (max-width: 700px) { .values { grid-template-columns: 1fr; } }
+  .value {
+    padding: 28px 28px;
+    border-right: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .value:nth-child(2n) { border-right: 0; }
+  .value:nth-child(n+3) { border-bottom: 0; }
+  @media (max-width: 700px) {
+    .value { border-right: 0; }
+    .value:not(:last-child) { border-bottom: 1px solid var(--line-soft); }
+  }
+  .value .num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: 0.08em;
+  }
+  .value h3 { margin-bottom: 8px; }
+  .value p { color: var(--fg-dim); font-size: 15px; line-height: 1.55; }
+
+  /* ---------- Pullquote ---------- */
+  .pullquote {
+    padding: 80px 0;
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+    text-align: center;
+  }
+  .pullquote blockquote {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.2;
+    font-style: italic;
+    color: var(--fg);
+    max-width: 24ch;
+    margin: 0 auto 24px;
+    font-weight: 400;
+  }
+  .pullquote blockquote::before { content: "“"; color: var(--accent); }
+  .pullquote blockquote::after { content: "”"; color: var(--accent); }
+  .pullquote cite {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-style: normal;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 48px 0;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .cta-row h3 { font-size: clamp(24px, 3vw, 32px); }
+</style>
+</head>
+<body>
+
+<div id="nav-slot"></div>
+
+<main class="shell">
+  <div class="page-head">
+    <div>
+      <span class="kicker">About</span>
+      <h1 style="margin-top: 16px;">Hello, I'm<br/>Ryan<em>.</em></h1>
+    </div>
+    <div class="side">
+      <div><strong>Location</strong> — Cambridgeshire, UK</div>
+      <div><strong>Title</strong> — Senior Software Engineer</div>
+      <div><strong>Alignment</strong> — Chaotic Helpful</div>
+      <div><strong>Class</strong> — Rogue / Arcanist multiclass</div>
+    </div>
+  </div>
+
+  <div class="about-grid">
+    <div class="label">01 / The short version</div>
+    <div class="body">
+      <p>
+        I write software for a living and I write more software when I get home. Most of
+        what I make starts as a tiny itch — an auction mechanic I want to understand, a
+        tool my D&amp;D group could use, a joke about every bad checkout flow I've ever
+        sat through.
+      </p>
+      <p class="dim">
+        I like things small, readable, and a little bit strange. I like dark themes, long
+        debugging sessions with a good soundtrack, and the moment a feature clicks into
+        place.
+      </p>
+    </div>
+  </div>
+
+  <div class="about-grid">
+    <div class="label">02 / The longer version</div>
+    <div class="body">
+      <p class="dim">
+        By day I'm a senior engineer — owning systems, mentoring, making decisions about
+        tradeoffs that nobody's going to write a blog post about. By night I'm usually
+        deep in a Pathfinder rulebook, or tinkering with the home-lab, or deliberately
+        playing a healer I have no business playing.
+      </p>
+      <p class="dim">
+        I don't have a brand. I don't have a niche. What I have is a list of little
+        projects I want to build, and the stubbornness to actually ship a few of them.
+      </p>
+      <p class="dim">
+        This site is the shelf they live on.
+      </p>
+    </div>
+  </div>
+
+  <div class="facts">
+    <div class="fact">
+      <div class="q">What I do best</div>
+      <div class="a">Building things that are <em>small enough to finish</em></div>
+    </div>
+    <div class="fact">
+      <div class="q">What I'm practicing</div>
+      <div class="a">Writing <em>less code</em> and shipping more often</div>
+    </div>
+    <div class="fact">
+      <div class="q">What's on the desk right now</div>
+      <div class="a"><em>biddingTest</em> — auction logic from scratch</div>
+    </div>
+  </div>
+
+  <div class="timeline-wrap">
+    <span class="kicker">A rough timeline</span>
+    <h2 style="margin-top: 16px;">How I got here.</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="year">now</div>
+        <div class="what">Senior Software Engineer</div>
+        <div class="note">Owning services, making calls, mentoring juniors, trying to write docs that people actually read.</div>
+      </div>
+      <div class="tl-item">
+        <div class="year">a few years ago</div>
+        <div class="what">Started DM'ing Pathfinder</div>
+        <div class="note">Turns out running a campaign is just distributed systems with more snacks.</div>
+      </div>
+      <div class="tl-item">
+        <div class="year">earlier</div>
+        <div class="what">Mid-level engineer, many tabs, many teams</div>
+        <div class="note">Learned that the most useful skill is explaining a thing twice.</div>
+      </div>
+      <div class="tl-item">
+        <div class="year">before that</div>
+        <div class="what">Junior dev, first real job</div>
+        <div class="note">Broke production, fixed production, wrote the postmortem, grew up a little.</div>
+      </div>
+      <div class="tl-item">
+        <div class="year">way before</div>
+        <div class="what">A kid messing with code</div>
+        <div class="note">The itch hasn't gone away since.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-grid">
+    <div class="label">03 / How I work</div>
+    <div class="body">
+      <p class="dim">
+        I believe in small surface areas, honest names, and the 10-minute rule: if you
+        can't describe what you're building in under ten minutes, you don't understand
+        it yet.
+      </p>
+    </div>
+  </div>
+
+  <div class="values">
+    <div class="value">
+      <div class="num">→ 01</div>
+      <h3>Clarity over cleverness</h3>
+      <p>The code I come back to in six months is the code that reads like English. Clever tricks age badly.</p>
+    </div>
+    <div class="value">
+      <div class="num">→ 02</div>
+      <h3>Ship small, ship often</h3>
+      <p>A tiny thing running in production beats a perfect thing still in a branch.</p>
+    </div>
+    <div class="value">
+      <div class="num">→ 03</div>
+      <h3>Docs are a feature</h3>
+      <p>If my future self can't onboard to it, neither can anyone else.</p>
+    </div>
+    <div class="value">
+      <div class="num">→ 04</div>
+      <h3>Leave the campfire tidy</h3>
+      <p>Tests, logs, comments where it matters. Future-you is a real person.</p>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <blockquote>The dice giveth, the dice taketh away. Ship anyway.</blockquote>
+    <cite>— me, to myself, most Fridays</cite>
+  </div>
+
+  <div class="cta-row">
+    <h3>Want the full CV?</h3>
+    <div class="row">
+      <a href="cv.html" class="btn primary">Download CV →</a>
+      <a href="projects.html" class="btn">See the work →</a>
+    </div>
+  </div>
+</main>
+
+<div id="footer-slot"></div>
+
+<aside id="tweaks-panel" class="tweaks" aria-label="Tweaks"></aside>
+
+<script src="assets/shared.js"></script>
+<script>
+  mountLayout('about');
+</script>
+</body>
+</html>

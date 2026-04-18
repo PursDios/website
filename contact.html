@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contact — Ryan Cooper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css" />
+<style>
+  .contact-hero {
+    padding: 24px 0 80px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 64px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  @media (max-width: 900px) { .contact-hero { grid-template-columns: 1fr; gap: 32px; } }
+  .contact-hero h1 {
+    font-size: clamp(52px, 8vw, 104px);
+    line-height: 0.98;
+  }
+  .contact-hero h1 em { color: var(--accent); font-style: italic; font-weight: 400; }
+  .contact-hero .lead { margin-top: 24px; }
+
+  .contact-hero .panel {
+    border: 1px solid var(--line-soft);
+    padding: 24px;
+    background: var(--bg-elev);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    align-self: end;
+  }
+  .contact-hero .panel .label {
+    font-size: 10px;
+    color: var(--fg-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .contact-hero .panel .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    color: var(--fg-dim);
+  }
+  .contact-hero .panel .row em { color: var(--accent); font-style: normal; }
+
+  /* ---------- Channel cards ---------- */
+  .channels {
+    padding: 64px 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 900px) { .channels { grid-template-columns: 1fr; } }
+
+  .channel {
+    border: 1px solid var(--line-soft);
+    padding: 28px;
+    background: var(--bg-elev);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 220px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .channel:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .channel::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0; height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .channel:hover::after { transform: scaleX(1); }
+
+  .channel .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-mute);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .channel .glyph {
+    font-family: var(--font-display);
+    font-size: 36px;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .channel h3 { font-size: 26px; margin-bottom: 8px; }
+  .channel .handle {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-dim);
+    word-break: break-all;
+  }
+  .channel .arrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-mute);
+    margin-top: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .channel:hover .arrow { color: var(--accent); }
+
+  /* ---------- Response block ---------- */
+  .response {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--line-soft);
+    margin: 32px 0 80px;
+  }
+  @media (max-width: 800px) { .response { grid-template-columns: 1fr; } }
+  .response-cell {
+    padding: 32px;
+    border-right: 1px solid var(--line-soft);
+  }
+  .response-cell:last-child { border-right: 0; }
+  @media (max-width: 800px) {
+    .response-cell:first-child { border-right: 0; border-bottom: 1px solid var(--line-soft); }
+  }
+  .response-cell .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .response-cell h3 { margin-bottom: 8px; }
+  .response-cell p { color: var(--fg-dim); font-size: 15px; }
+
+  /* ---------- CV block ---------- */
+  .cv-block {
+    padding: 60px 0;
+    border-top: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  @media (max-width: 800px) { .cv-block { grid-template-columns: 1fr; } }
+  .cv-block h2 { font-size: clamp(32px, 4vw, 44px); }
+  .cv-preview {
+    aspect-ratio: 3 / 4;
+    max-width: 280px;
+    background: var(--bg-elev);
+    border: 1px solid var(--line-soft);
+    position: relative;
+    padding: 24px;
+    font-family: var(--font-mono);
+    font-size: 7px;
+    line-height: 1.8;
+    color: var(--fg-mute);
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    transform: rotate(-2deg);
+    margin: 0 auto;
+  }
+  .cv-preview::before {
+    content: "RYAN COOPER";
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--fg);
+    display: block;
+    margin-bottom: 2px;
+    letter-spacing: 0.02em;
+  }
+  .cv-preview::after {
+    content: "senior software engineer";
+    font-family: var(--font-mono);
+    font-size: 7px;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 16px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .cv-preview .ln {
+    display: block;
+    height: 4px;
+    background: var(--line-soft);
+    margin-bottom: 4px;
+  }
+  .cv-preview .ln.short { width: 40%; }
+  .cv-preview .ln.mid { width: 70%; }
+  .cv-preview .ln.full { width: 100%; }
+  .cv-preview .heading {
+    display: block;
+    color: var(--accent);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    margin: 10px 0 4px;
+    text-transform: uppercase;
+  }
+
+  /* ---------- Pigeon sign-off ---------- */
+  .signoff {
+    padding: 80px 0 20px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-mute);
+    letter-spacing: 0.08em;
+  }
+  .signoff .big {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 56px);
+    color: var(--fg);
+    margin: 16px 0;
+    letter-spacing: -0.02em;
+  }
+  .signoff .big em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+  /* ---------- Status dot pulse ---------- */
+  .status-avail {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-dim);
+    margin-top: 24px;
+    letter-spacing: 0.04em;
+  }
+  .status-avail .pulse {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    position: relative;
+  }
+  .status-avail .pulse::after {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(3); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div id="nav-slot"></div>
+
+<main class="shell">
+  <div class="contact-hero">
+    <div>
+      <span class="kicker">Contact</span>
+      <h1 style="margin-top: 16px;">Roll for<br/>perception<em>.</em></h1>
+      <p class="lead">
+        If you've got a cool project, a weird idea, or a Pathfinder rules question, my
+        inbox is open. I answer most things within a day or two, and the others within
+        a week — depends on the week.
+      </p>
+      <div class="status-avail">
+        <span class="pulse"></span>
+        Currently open to interesting conversations.
+      </div>
+    </div>
+    <div class="panel">
+      <div class="label">Signal check</div>
+      <div class="row"><k>Location</k><span><em>Cambridgeshire, UK</em></span></div>
+      <div class="row"><k>Timezone</k><span>GMT / BST</span></div>
+      <div class="row"><k>Best time</k><span>evenings</span></div>
+      <div class="row"><k>Response</k><span><em>~24–48h</em></span></div>
+      <div class="row"><k>Coffee</k><span>tea, actually</span></div>
+    </div>
+  </div>
+
+  <div class="channels">
+    <a href="/cdn-cgi/l/email-protection#650d0009090a25171c040b060a0a1500174b060a4b100e" class="channel">
+      <div class="head">
+        <span>01 / mail</span>
+        <span class="glyph">✉</span>
+      </div>
+      <div>
+        <h3>Email</h3>
+        <div class="handle"><span class="__cf_email__" data-cfemail="5d35383131321d2f243c333e32322d382f733e32732836">[email&#160;protected]</span></div>
+        <div class="arrow">send a message →</div>
+      </div>
+    </a>
+    <a href="https://gitlab.com/ryancooper" class="channel">
+      <div class="head">
+        <span>02 / source</span>
+        <span class="glyph">⌥</span>
+      </div>
+      <div>
+        <h3>GitLab</h3>
+        <div class="handle">gitlab.com/ryancooper</div>
+        <div class="arrow">see the commits →</div>
+      </div>
+    </a>
+    <a href="https://linkedin.com/in/ryancooper" class="channel">
+      <div class="head">
+        <span>03 / formal</span>
+        <span class="glyph">◈</span>
+      </div>
+      <div>
+        <h3>LinkedIn</h3>
+        <div class="handle">linkedin.com/in/ryancooper</div>
+        <div class="arrow">the professional one →</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="response">
+    <div class="response-cell">
+      <div class="label">good reasons to write</div>
+      <h3>Yes, please.</h3>
+      <p>Interesting problems, small collaborations, paid senior roles, D&amp;D questions, tool ideas, tech you think I'd like, typos on this site.</p>
+    </div>
+    <div class="response-cell">
+      <div class="label">bad reasons to write</div>
+      <h3>Probably not.</h3>
+      <p>Cold "opportunities" that require a 30-minute call to explain. Anything involving the words "rockstar" or "ninja" unironically. Crypto. You know.</p>
+    </div>
+  </div>
+
+  <div class="cv-block">
+    <div>
+      <span class="kicker">Paperwork</span>
+      <h2 style="margin-top: 16px;">Need the CV?</h2>
+      <p style="margin-top: 16px;">
+        A tidy one-pager covering roles, tools, and the short version of the timeline on
+        the About page. PDF, dark-theme version also available on request.
+      </p>
+      <div class="row" style="margin-top: 28px;">
+        <a href="#" class="btn primary" download>Download PDF →</a>
+        <a href="about.html" class="btn">See timeline →</a>
+      </div>
+    </div>
+    <div class="cv-preview">
+      <span class="ln full"></span>
+      <span class="ln mid"></span>
+      <span class="heading">experience</span>
+      <span class="ln full"></span>
+      <span class="ln full"></span>
+      <span class="ln short"></span>
+      <span class="ln mid"></span>
+      <span class="ln full"></span>
+      <span class="heading">skills</span>
+      <span class="ln full"></span>
+      <span class="ln mid"></span>
+      <span class="heading">projects</span>
+      <span class="ln full"></span>
+      <span class="ln short"></span>
+    </div>
+  </div>
+
+  <div class="signoff">
+    <span>— end transmission —</span>
+    <div class="big">Thanks for reading<em>.</em></div>
+    <span>built slowly, mostly after midnight</span>
+  </div>
+</main>
+
+<div id="footer-slot"></div>
+
+<aside id="tweaks-panel" class="tweaks" aria-label="Tweaks"></aside>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script src="assets/shared.js"></script>
+<script>
+  mountLayout('contact');
+</script>
+</body>
+</html>

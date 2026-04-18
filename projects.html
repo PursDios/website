@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Projects — Ryan Cooper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css" />
+<style>
+  .page-head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding-top: 24px;
+    padding-bottom: 64px;
+    border-bottom: 1px solid var(--line-soft);
+    align-items: end;
+  }
+  @media (max-width: 800px) { .page-head { grid-template-columns: 1fr; gap: 24px; } }
+  .page-head h1 { font-size: clamp(48px, 7vw, 88px); }
+  .page-head h1 em { color: var(--accent); font-style: italic; font-weight: 400; }
+  .page-head .meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-mute);
+    letter-spacing: 0.04em;
+    line-height: 1.8;
+  }
+  .page-head .meta strong { color: var(--fg); font-weight: 400; }
+
+  /* ---------- Filter strip ---------- */
+  .filters {
+    display: flex;
+    gap: 4px;
+    margin: 32px 0;
+    flex-wrap: wrap;
+  }
+  .filter {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    color: var(--fg-dim);
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.15s;
+  }
+  .filter:hover { color: var(--fg); border-color: var(--fg-dim); }
+  .filter.active { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+
+  /* ---------- Project block ---------- */
+  .project {
+    padding: 80px 0;
+    border-top: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    scroll-margin-top: 100px;
+  }
+  @media (max-width: 900px) { .project { grid-template-columns: 1fr; } }
+  .project.hidden { display: none; }
+
+  .project-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-mute);
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .project-meta .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--fg-mute);
+  }
+  .project-meta .dot.live { background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .project-meta .dot.wip { background: #ffd166; box-shadow: 0 0 0 4px rgba(255,209,102,0.15); }
+  .project-meta .dot.planned { background: var(--fg-mute); }
+
+  .project h2 {
+    font-size: clamp(36px, 5vw, 56px);
+    margin-bottom: 16px;
+  }
+  .project .sub {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--fg-dim);
+    margin-bottom: 24px;
+    letter-spacing: 0.02em;
+  }
+  .project p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--fg-dim);
+    margin-bottom: 16px;
+    max-width: 56ch;
+  }
+  .project p.dim { color: var(--fg-mute); font-size: 14px; }
+
+  .project .stack {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .project .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  /* ---------- Project visual placeholder ---------- */
+  .project-visual {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: var(--bg-elev);
+    border: 1px solid var(--line-soft);
+    overflow: hidden;
+  }
+  .project-visual .corner {
+    position: absolute;
+    width: 10px; height: 10px;
+    border: 1px solid var(--fg-mute);
+  }
+  .project-visual .corner.tl { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
+  .project-visual .corner.tr { top: 8px; right: 8px; border-left: 0; border-bottom: 0; }
+  .project-visual .corner.bl { bottom: 8px; left: 8px; border-right: 0; border-top: 0; }
+  .project-visual .corner.br { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
+  .project-visual .tag-label {
+    position: absolute;
+    top: 14px; left: 14px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--fg-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .project-visual .tag-label em { color: var(--accent); font-style: normal; }
+
+  /* Specific visual: Harrowing (cards) */
+  .vis-harrow { background: var(--bg-elev); }
+  .vis-harrow .row-labels {
+    position: absolute;
+    top: 38px;
+    left: 40px;
+    right: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .vis-harrow .cards {
+    position: absolute;
+    inset: 68px 40px 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .vis-harrow .card {
+    border: 1px solid var(--line);
+    background: var(--bg-elev-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--fg-mute);
+    position: relative;
+    overflow: hidden;
+  }
+  .vis-harrow .card::before {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border: 1px dashed var(--line-soft);
+  }
+  .vis-harrow .card.glow {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .vis-harrow .card.glow::before { border-color: var(--accent); }
+
+  /* Specific visual: Bidding */
+  .vis-bid { background: var(--bg-elev); }
+  .vis-bid .graph {
+    position: absolute;
+    inset: 40px 40px 60px;
+  }
+  .vis-bid svg { width: 100%; height: 100%; }
+  .vis-bid .legend {
+    position: absolute;
+    bottom: 14px; left: 14px; right: 14px;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--fg-mute);
+    letter-spacing: 0.06em;
+  }
+
+  /* Specific visual: AI wall mapper */
+  .vis-map { background: var(--bg-elev); }
+  .vis-map .grid {
+    position: absolute;
+    inset: 40px;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 19px, var(--line-soft) 19px 20px),
+      repeating-linear-gradient(90deg, transparent 0 19px, var(--line-soft) 19px 20px);
+  }
+  .vis-map .walls {
+    position: absolute;
+    inset: 40px;
+  }
+  .vis-map .walls svg { width: 100%; height: 100%; }
+  .vis-map .scan {
+    position: absolute;
+    left: 40px; right: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    animation: scan 3s linear infinite;
+    top: 40px;
+    filter: drop-shadow(0 0 8px var(--accent));
+  }
+  @keyframes scan {
+    0% { top: 40px; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: calc(100% - 40px); opacity: 0; }
+  }
+
+  /* Specific visual: LolBuy — amazon-ish storefront */
+  .vis-lol {
+    background: #0f1419;
+    position: relative;
+    font-family: var(--font-body);
+  }
+  .vis-lol .topbar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 28px;
+    background: #131a21;
+    border-bottom: 1px solid #1e2730;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 8px;
+    font-size: 9px;
+    color: #cfd8dc;
+  }
+  .vis-lol .topbar .logo {
+    font-family: var(--font-display);
+    font-size: 12px;
+    color: #ffb74d;
+    font-weight: 600;
+  }
+  .vis-lol .topbar .logo em { color: #ff4d6d; font-style: normal; }
+  .vis-lol .topbar .search {
+    flex: 1;
+    background: #1e2730;
+    height: 14px;
+    border-radius: 2px;
+    font-size: 8px;
+    color: #78909c;
+    padding: 0 6px;
+    display: flex;
+    align-items: center;
+  }
+  .vis-lol .topbar .cart { color: #ffb74d; font-size: 9px; }
+  .vis-lol .grid-prod {
+    position: absolute;
+    top: 36px; left: 8px; right: 8px; bottom: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .vis-lol .prod {
+    background: #131a21;
+    border: 1px solid #1e2730;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .vis-lol .prod .img {
+    height: 38%;
+    background: repeating-linear-gradient(45deg, #1e2730 0 4px, #262f38 4px 8px);
+    margin-bottom: 3px;
+  }
+  .vis-lol .prod .ttl { color: #e8f0f2; font-size: 8px; line-height: 1.2; }
+  .vis-lol .prod .price { color: #ffb74d; font-size: 10px; font-weight: 600; }
+  .vis-lol .prod .price s { color: #78909c; font-weight: 400; font-size: 8px; margin-left: 3px; }
+  .vis-lol .prod .urgent { color: #ff4d6d; font-size: 7px; letter-spacing: 0.05em; }
+  .vis-lol .prod .stars { color: #ffb74d; font-size: 8px; letter-spacing: -0.5px; }
+  .vis-lol .prod .badge {
+    position: absolute;
+    top: 0; right: 0;
+    background: #ff4d6d;
+    color: #fff;
+    font-size: 7px;
+    padding: 1px 4px;
+    letter-spacing: 0.05em;
+  }
+  .vis-lol .bottom-cta {
+    position: absolute;
+    bottom: 4px; left: 8px; right: 8px;
+    height: 22px;
+    background: #ffb74d;
+    color: #0f1419;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .vis-lol .chip {
+    position: absolute;
+    bottom: 30px; right: 10px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: #ff4d6d;
+    letter-spacing: 0.1em;
+    padding: 3px 6px;
+    border: 1px solid #ff4d6d;
+    background: rgba(15,20,25,0.8);
+  }
+
+  /* ---------- Idea list at bottom ---------- */
+  .ideas {
+    padding: 80px 0 40px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .ideas h2 { margin-bottom: 16px; }
+  .ideas-list { list-style: none; margin-top: 32px; }
+  .ideas-list li {
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--line-soft);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .ideas-list li .name { color: var(--fg); }
+  .ideas-list li .note { color: var(--fg-mute); }
+</style>
+</head>
+<body>
+
+<div id="nav-slot"></div>
+
+<main class="shell">
+  <div class="page-head">
+    <div>
+      <span class="kicker">Projects</span>
+      <h1 style="margin-top: 16px;">Things I'm<br/>tinkering with<em>.</em></h1>
+    </div>
+    <div class="meta">
+      <div><strong>Total</strong> — 3 projects, 0 shipped</div>
+      <div><strong>Currently</strong> — Harrowing</div>
+      <div><strong>Stack</strong> — Laravel + Livewire, mostly</div>
+    </div>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="filter active" data-filter="all">All</button>
+    <button class="filter" data-filter="live">Live</button>
+    <button class="filter" data-filter="wip">In progress</button>
+    <button class="filter" data-filter="planned">Planned</button>
+    <button class="filter" data-filter="joke">Just for fun</button>
+  </div>
+
+  <!-- ===== Harrowing ===== -->
+  <article class="project" id="harrowing" data-status="wip">
+    <div>
+      <div class="project-meta">
+        <span><span class="dot wip"></span> in progress</span>
+        <span>/ 01</span>
+        <span>pathfinder · ttrpg · web</span>
+      </div>
+      <h2>Harrowing</h2>
+      <div class="sub">harrowing.ryancooper.co.uk</div>
+      <p>
+        A little web tool for reading a Pathfinder 1e harrow deck — the fortune-telling
+        card system lovingly tucked into the Harrow Handbook. Drop a spread, see the
+        meanings, share the result.
+      </p>
+      <p class="dim">
+        Built because I wanted my players to stop fumbling through the book at the table.
+        Also because laying out 9 cards in CSS grid is genuinely satisfying.
+      </p>
+      <div class="stack">
+        <span class="tag">Laravel</span>
+        <span class="tag">Livewire</span>
+        <span class="tag">Alpine.js</span>
+        <span class="tag">Tailwind</span>
+      </div>
+      <div class="actions">
+        <a href="#" class="btn primary">Open Harrowing →</a>
+        <a href="#" class="btn">Source →</a>
+      </div>
+    </div>
+    <div class="project-visual vis-harrow">
+      <span class="corner tl"></span><span class="corner tr"></span>
+      <span class="corner bl"></span><span class="corner br"></span>
+      <span class="tag-label"><em>◆</em> harrow spread — 3×3</span>
+      <div class="row-labels">
+        <span>past</span>
+        <span>present</span>
+        <span>future</span>
+      </div>
+      <div class="cards">
+        <div class="card">◈</div>
+        <div class="card">✦</div>
+        <div class="card glow">☉</div>
+        <div class="card">✶</div>
+        <div class="card glow">♆</div>
+        <div class="card">◇</div>
+        <div class="card">✧</div>
+        <div class="card">☽</div>
+        <div class="card">◉</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ===== biddingTest ===== -->
+  <article class="project" id="bidding" data-status="planned">
+    <div>
+      <div class="project-meta">
+        <span><span class="dot planned"></span> planned</span>
+        <span>/ 02</span>
+        <span>auctions · real-time · backend</span>
+      </div>
+      <h2>biddingTest</h2>
+      <div class="sub">biddingtest.ryancooper.co.uk</div>
+      <p>
+        An unglamorous auction sandbox. Start a room, set rules (English, Dutch,
+        sealed-bid), watch the bids roll in, see what the edge cases actually do at 3am
+        when two bots disagree about the tick-size.
+      </p>
+      <p class="dim">
+        Not a product. A place to understand. I'd rather get the mechanics right in a toy
+        than wrong in a real codebase.
+      </p>
+      <div class="stack">
+        <span class="tag">Laravel</span>
+        <span class="tag">Livewire</span>
+        <span class="tag">Reverb</span>
+        <span class="tag">MySQL</span>
+      </div>
+      <div class="actions">
+        <a href="#" class="btn">Coming soon →</a>
+      </div>
+    </div>
+    <div class="project-visual vis-bid">
+      <span class="corner tl"></span><span class="corner tr"></span>
+      <span class="corner bl"></span><span class="corner br"></span>
+      <span class="tag-label"><em>◆</em> bid history — last 40s</span>
+      <div class="graph">
+        <svg viewBox="0 0 400 200" preserveAspectRatio="none">
+          <polyline fill="none" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"
+            points="0,150 50,140 100,135 150,120 200,110 250,85 300,70 350,50 400,30" />
+          <polyline fill="none" stroke="var(--accent)" stroke-width="1.5"
+            points="0,160 30,155 60,148 90,142 110,145 150,120 175,118 200,105 230,95 260,80 290,75 320,60 350,45 380,40 400,28" />
+          <circle cx="400" cy="28" r="4" fill="var(--accent)" />
+        </svg>
+      </div>
+      <div class="legend">
+        <span>t−40s</span>
+        <span>£ → ∞</span>
+        <span>now</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- ===== LolBuy ===== -->
+  <article class="project" id="lolbuy" data-status="joke planned">
+    <div>
+      <div class="project-meta">
+        <span><span class="dot planned"></span> planned / very silly</span>
+        <span>/ 03</span>
+        <span>e-commerce · dark patterns · satire</span>
+      </div>
+      <h2>LolBuy</h2>
+      <div class="sub">lolbuy.ryancooper.co.uk</div>
+      <p>
+        An e-commerce site with <strong>every</strong> wrong decision ever made by a
+        checkout flow. "Your vibe is giving Derek — login as Derek?" Timers that reset on
+        hover. Unsubscribe buttons that subscribe you to three more things.
+      </p>
+      <p class="dim">
+        A love-letter to dark patterns, wearing a hazmat suit. Useful as a teaching tool.
+        Mostly useful as a laugh.
+      </p>
+      <div class="stack">
+        <span class="tag">Vue 3</span>
+        <span class="tag">Vite</span>
+        <span class="tag">Intentional chaos</span>
+        <span class="tag">A11y lecture notes</span>
+      </div>
+      <div class="actions">
+        <a href="#" class="btn">Wishlist of sins →</a>
+      </div>
+    </div>
+    <div class="project-visual vis-lol">
+      <span class="corner tl" style="border-color:#ff4d6d;"></span>
+      <span class="corner tr" style="border-color:#ff4d6d;"></span>
+      <span class="corner bl" style="border-color:#ff4d6d;"></span>
+      <span class="corner br" style="border-color:#ff4d6d;"></span>
+      <div class="topbar">
+        <span class="logo">lol<em>buy</em></span>
+        <span class="search">search anything — you'll get shoes</span>
+        <span class="cart">🛍 37</span>
+      </div>
+      <div class="grid-prod">
+        <div class="prod">
+          <span class="badge">LIMITED</span>
+          <div class="img"></div>
+          <div class="ttl">Generic Thing ®</div>
+          <div class="stars">★★★★☆</div>
+          <div class="price">£19.99 <s>£20</s></div>
+          <div class="urgent">2 left! (not really)</div>
+        </div>
+        <div class="prod">
+          <div class="img"></div>
+          <div class="ttl">Thing You Looked At Once</div>
+          <div class="stars">★★★★★</div>
+          <div class="price">£42.00</div>
+          <div class="urgent">15 bought in last hour</div>
+        </div>
+        <div class="prod">
+          <span class="badge">DEAL</span>
+          <div class="img"></div>
+          <div class="ttl">Not What You Searched For</div>
+          <div class="stars">★★★☆☆</div>
+          <div class="price">£99.00 <s>£100</s></div>
+          <div class="urgent">Prime ★ tomorrow</div>
+        </div>
+      </div>
+      <div class="chip">DARK PATTERN</div>
+      <div class="bottom-cta">BUY NOW — DEREK'S 15% OFF EXPIRES IN 00:12</div>
+    </div>
+  </article>
+
+  <div class="ideas">
+    <span class="kicker">Parking lot</span>
+    <h2 style="margin-top: 16px;">Ideas I haven't committed to yet.</h2>
+    <p style="margin-top: 16px;">Half of these will never happen. A few of them will suddenly happen next Tuesday.</p>
+    <ul class="ideas-list">
+      <li><span class="name">— an app that rates how likely your meeting could've been an email</span><span class="note">weapon // 7d effort</span></li>
+      <li><span class="name">— a d20 that's legally required to roll a 20 once per session</span><span class="note">contraband // TBD</span></li>
+      <li><span class="name">— microwave that swears at you when you stop it at 00:01</span><span class="note">hardware // don't ask</span></li>
+      <li><span class="name">— a Chrome extension that replaces every "synergy" with "smooch"</span><span class="note">public service // done on a train</span></li>
+      <li><span class="name">— therapy chatbot that only quotes Stellaris flavour text</span><span class="note">spiritual warfare // questionable</span></li>
+      <li><span class="name">— a RimWorld colony simulator for planning my actual week</span><span class="note">probably cursed // inevitable</span></li>
+    </ul>
+  </div>
+
+  <div style="padding: 60px 0 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+    <h3>Have a small thing you want built?</h3>
+    <a href="contact.html" class="btn primary">Say hi →</a>
+  </div>
+</main>
+
+<div id="footer-slot"></div>
+
+<aside id="tweaks-panel" class="tweaks" aria-label="Tweaks"></aside>
+
+<script src="assets/shared.js"></script>
+<script>
+  mountLayout('projects');
+  // Filter
+  document.querySelectorAll("#filters .filter").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#filters .filter").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const f = btn.dataset.filter;
+      document.querySelectorAll(".project").forEach(p => {
+        if (f === "all") p.classList.remove("hidden");
+        else p.classList.toggle("hidden", !p.dataset.status.split(" ").includes(f));
+      });
+    });
+  });
+</script>
+</body>
+</html>
