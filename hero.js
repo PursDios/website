@@ -216,7 +216,7 @@
     if (label) {
       if (mode === "ascii") label.innerHTML = "<em>01</em> &nbsp; signal — scanning";
       else if (mode === "orbit") label.innerHTML = "<em>01</em> &nbsp; orbit — cambridgeshire";
-      else label.innerHTML = "<em>01</em> &nbsp; initiative roll — natural twenty";
+      else label.innerHTML = "<em>01</em> &nbsp; nat twenty — crit confirmed";
     }
   }
 
