@@ -6,8 +6,8 @@
 <title>Contact — Ryan Cooper</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
 <style>
   .contact-hero {
     padding: 24px 0 80px;
@@ -49,7 +49,6 @@
   }
   .contact-hero .panel .row em { color: var(--accent); font-style: normal; }
 
-  /* ---------- Channel cards ---------- */
   .channels {
     padding: 64px 0;
     display: grid;
@@ -122,7 +121,6 @@
   }
   .channel:hover .arrow { color: var(--accent); }
 
-  /* ---------- Response block ---------- */
   .response {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -150,7 +148,6 @@
   .response-cell h3 { margin-bottom: 8px; }
   .response-cell p { color: var(--fg-dim); font-size: 15px; }
 
-  /* ---------- CV block ---------- */
   .cv-block {
     padding: 60px 0;
     border-top: 1px solid var(--line-soft);
@@ -214,7 +211,6 @@
     text-transform: uppercase;
   }
 
-  /* ---------- Pigeon sign-off ---------- */
   .signoff {
     padding: 80px 0 20px;
     text-align: center;
@@ -232,7 +228,6 @@
   }
   .signoff .big em { color: var(--accent); font-style: italic; font-weight: 400; }
 
-  /* ---------- Status dot pulse ---------- */
   .status-avail {
     display: inline-flex; align-items: center; gap: 10px;
     font-family: var(--font-mono);
@@ -289,14 +284,14 @@
   </div>
 
   <div class="channels">
-    <a href="/cdn-cgi/l/email-protection#650d0009090a25171c040b060a0a1500174b060a4b100e" class="channel">
+    <a href="mailto:hello@ryancooper.co.uk" class="channel">
       <div class="head">
         <span>01 / mail</span>
         <span class="glyph">✉</span>
       </div>
       <div>
         <h3>Email</h3>
-        <div class="handle"><span class="__cf_email__" data-cfemail="5d35383131321d2f243c333e32322d382f733e32732836">[email&#160;protected]</span></div>
+        <div class="handle">hello@ryancooper.co.uk</div>
         <div class="arrow">send a message →</div>
       </div>
     </a>
@@ -377,9 +372,7 @@
 
 <div id="footer-slot"></div>
 
-<aside id="tweaks-panel" class="tweaks" aria-label="Tweaks"></aside>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script src="assets/shared.js"></script>
+<script src="shared.js"></script>
 <script>
   mountLayout('contact');
 </script>

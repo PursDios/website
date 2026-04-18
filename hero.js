@@ -1,9 +1,3 @@
-// ------------------- Hero animation -------------------
-// Three hero modes controlled by data-hero on <body>:
-//   dice   → slowly rotating isometric d20 wireframe
-//   ascii  → glyph-grid ripple
-//   orbit  → orbiting glyphs around a center
-
 (function() {
   const svg = document.getElementById("hero-svg");
   if (!svg) return;
@@ -17,8 +11,6 @@
   }
 
   function setupDice() {
-    // Isometric d20 (icosahedron) approximated as a wireframe with 12 vertices
-    // We rotate in 3D and project to 2D
     const phi = (1 + Math.sqrt(5)) / 2;
     const verts = [
       [-1,  phi, 0], [ 1,  phi, 0], [-1, -phi, 0], [ 1, -phi, 0],
@@ -47,7 +39,6 @@
     const cx = 200, cy = 200, scale = 110;
 
     function project(p, ax, ay) {
-      // rotate around Y then X
       let [x, y, z] = p;
       let x1 = x * Math.cos(ay) + z * Math.sin(ay);
       let z1 = -x * Math.sin(ay) + z * Math.cos(ay);
@@ -56,7 +47,6 @@
       return [cx + x1 * scale, cy + y1 * scale, z2];
     }
 
-    // Build static SVG structure we can update
     const edgeEls = edges.map(() => {
       const l = document.createElementNS("http://www.w3.org/2000/svg", "line");
       l.setAttribute("stroke-width", "1");
@@ -71,7 +61,6 @@
       svg.appendChild(p);
       return p;
     });
-    // Center label showing "20"
     const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
     label.setAttribute("x", cx);
     label.setAttribute("y", cy + 8);
@@ -88,7 +77,6 @@
       const ax = Math.sin(elapsed * 0.22) * 0.45;
       const projected = verts.map(v => project(v, ax, ay));
 
-      // Highlight the 'top' face (closest to camera = smallest z)
       const faceDepth = faces.map((f, i) => {
         const avgZ = (projected[f[0]][2] + projected[f[1]][2] + projected[f[2]][2]) / 3;
         return { i, avgZ };
@@ -110,7 +98,6 @@
         el.setAttribute("y1", pa[1].toFixed(1));
         el.setAttribute("x2", pb[0].toFixed(1));
         el.setAttribute("y2", pb[1].toFixed(1));
-        // depth-based opacity + stroke color
         const near = depth < 0;
         el.setAttribute("stroke", near ? "var(--accent)" : "var(--fg-dim)");
         el.setAttribute("opacity", near ? "1" : "0.35");
@@ -161,19 +148,18 @@
   function setupOrbit() {
     const cx = 200, cy = 200;
     const items = [
-      { g: "◆", r: 60,  s: 1.6,  ph: 0,    sz: 22 },
-      { g: "◇", r: 60,  s: 1.6,  ph: Math.PI, sz: 22 },
-      { g: "◦", r: 110, s: -0.9, ph: 0,    sz: 14 },
-      { g: "+", r: 110, s: -0.9, ph: 2.1,  sz: 14 },
-      { g: "×", r: 110, s: -0.9, ph: 4.2,  sz: 14 },
-      { g: "·", r: 160, s: 0.5,  ph: 0,    sz: 10 },
-      { g: "·", r: 160, s: 0.5,  ph: 1.2,  sz: 10 },
-      { g: "·", r: 160, s: 0.5,  ph: 2.4,  sz: 10 },
-      { g: "·", r: 160, s: 0.5,  ph: 3.6,  sz: 10 },
-      { g: "·", r: 160, s: 0.5,  ph: 4.8,  sz: 10 },
+      { g: "◆", r: 60,  s: 1.6,  ph: 0,         sz: 22 },
+      { g: "◇", r: 60,  s: 1.6,  ph: Math.PI,    sz: 22 },
+      { g: "◦", r: 110, s: -0.9, ph: 0,          sz: 14 },
+      { g: "+", r: 110, s: -0.9, ph: 2.1,         sz: 14 },
+      { g: "×", r: 110, s: -0.9, ph: 4.2,         sz: 14 },
+      { g: "·", r: 160, s: 0.5,  ph: 0,           sz: 10 },
+      { g: "·", r: 160, s: 0.5,  ph: 1.2,         sz: 10 },
+      { g: "·", r: 160, s: 0.5,  ph: 2.4,         sz: 10 },
+      { g: "·", r: 160, s: 0.5,  ph: 3.6,         sz: 10 },
+      { g: "·", r: 160, s: 0.5,  ph: 4.8,         sz: 10 },
     ];
-    // static rings
-    [60, 110, 160].forEach((r, i) => {
+    [60, 110, 160].forEach((r) => {
       const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       c.setAttribute("cx", cx);
       c.setAttribute("cy", cy);
@@ -183,7 +169,6 @@
       c.setAttribute("stroke-dasharray", "2 4");
       svg.appendChild(c);
     });
-    // center
     const center = document.createElementNS("http://www.w3.org/2000/svg", "text");
     center.setAttribute("x", cx);
     center.setAttribute("y", cy + 10);
@@ -227,7 +212,6 @@
     if (mode === "ascii") setupAscii();
     else if (mode === "orbit") setupOrbit();
     else setupDice();
-    // update label
     const label = document.querySelector(".art-label");
     if (label) {
       if (mode === "ascii") label.innerHTML = "<em>01</em> &nbsp; signal — scanning";
@@ -236,17 +220,13 @@
     }
   }
 
-  // Sync with body[data-hero]
   function readMode() {
     return document.body.getAttribute("data-hero") || "dice";
   }
   swap(readMode());
-  document.addEventListener("tweakschanged", () => swap(readMode()));
-  // Observe attribute changes too (in case set before listener)
   new MutationObserver(() => swap(readMode()))
     .observe(document.body, { attributes: true, attributeFilter: ["data-hero"] });
 
-  // ---------- Cursor dice follower ----------
   const cursor = document.getElementById("cursor-dice");
   if (cursor) {
     cursor.innerHTML = `

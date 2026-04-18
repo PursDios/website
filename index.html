@@ -6,10 +6,9 @@
 <title>Ryan Cooper — Senior Software Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
 <style>
-  /* ---------- Hero ---------- */
   .hero {
     position: relative;
     padding-top: 40px;
@@ -78,7 +77,6 @@
 
   .hero-cta { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
 
-  /* ---------- Hero art stage ---------- */
   .hero-art {
     position: relative;
     aspect-ratio: 1 / 1;
@@ -114,7 +112,6 @@
   }
   .hero-art .art-label em { color: var(--accent); font-style: normal; }
 
-  /* ---------- Snippet strip ---------- */
   .strip {
     display: flex;
     gap: 0;
@@ -146,7 +143,6 @@
     to { transform: translateX(-50%); }
   }
 
-  /* ---------- Summary grid ---------- */
   .summary {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -181,7 +177,6 @@
   }
   .summary-cell .v em { color: var(--accent); font-style: normal; }
 
-  /* ---------- Featured projects teaser ---------- */
   .featured { margin-top: 120px; }
   .project-row {
     display: grid;
@@ -234,7 +229,6 @@
     .project-row .status, .project-row .arrow { display: none; }
   }
 
-  /* ---------- Closing ---------- */
   .closer {
     margin-top: 120px;
     padding: 80px 0;
@@ -249,7 +243,6 @@
   .closer .right { color: var(--fg-dim); }
   .closer .right p { margin-bottom: 24px; }
 
-  /* ---------- Cursor dice follower ---------- */
   .cursor-dice {
     position: fixed;
     pointer-events: none;
@@ -389,11 +382,10 @@
 
 <div id="footer-slot"></div>
 
-<aside id="tweaks-panel" class="tweaks" aria-label="Tweaks"></aside>
 <div id="cursor-dice" class="cursor-dice"></div>
 
-<script src="assets/shared.js"></script>
-<script src="assets/hero.js"></script>
+<script src="shared.js"></script>
+<script src="hero.js"></script>
 <script>
   mountLayout('home');
 </script>

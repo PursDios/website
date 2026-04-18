@@ -6,8 +6,8 @@
 <title>Projects — Ryan Cooper</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
 <style>
   .page-head {
     display: grid;
@@ -30,7 +30,6 @@
   }
   .page-head .meta strong { color: var(--fg); font-weight: 400; }
 
-  /* ---------- Filter strip ---------- */
   .filters {
     display: flex;
     gap: 4px;
@@ -52,7 +51,6 @@
   .filter:hover { color: var(--fg); border-color: var(--fg-dim); }
   .filter.active { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
 
-  /* ---------- Project block ---------- */
   .project {
     padding: 80px 0;
     border-top: 1px solid var(--line-soft);
@@ -115,7 +113,6 @@
     flex-wrap: wrap;
   }
 
-  /* ---------- Project visual placeholder ---------- */
   .project-visual {
     position: relative;
     aspect-ratio: 4 / 3;
@@ -143,7 +140,6 @@
   }
   .project-visual .tag-label em { color: var(--accent); font-style: normal; }
 
-  /* Specific visual: Harrowing (cards) */
   .vis-harrow { background: var(--bg-elev); }
   .vis-harrow .row-labels {
     position: absolute;
@@ -195,7 +191,6 @@
   }
   .vis-harrow .card.glow::before { border-color: var(--accent); }
 
-  /* Specific visual: Bidding */
   .vis-bid { background: var(--bg-elev); }
   .vis-bid .graph {
     position: absolute;
@@ -213,7 +208,6 @@
     letter-spacing: 0.06em;
   }
 
-  /* Specific visual: AI wall mapper */
   .vis-map { background: var(--bg-elev); }
   .vis-map .grid {
     position: absolute;
@@ -243,7 +237,6 @@
     100% { top: calc(100% - 40px); opacity: 0; }
   }
 
-  /* Specific visual: LolBuy — amazon-ish storefront */
   .vis-lol {
     background: #0f1419;
     position: relative;
@@ -344,7 +337,6 @@
     background: rgba(15,20,25,0.8);
   }
 
-  /* ---------- Idea list at bottom ---------- */
   .ideas {
     padding: 80px 0 40px;
     border-top: 1px solid var(--line-soft);
@@ -390,7 +382,6 @@
     <button class="filter" data-filter="joke">Just for fun</button>
   </div>
 
-  <!-- ===== Harrowing ===== -->
   <article class="project" id="harrowing" data-status="wip">
     <div>
       <div class="project-meta">
@@ -443,7 +434,6 @@
     </div>
   </article>
 
-  <!-- ===== biddingTest ===== -->
   <article class="project" id="bidding" data-status="planned">
     <div>
       <div class="project-meta">
@@ -493,7 +483,6 @@
     </div>
   </article>
 
-  <!-- ===== LolBuy ===== -->
   <article class="project" id="lolbuy" data-status="joke planned">
     <div>
       <div class="project-meta">
@@ -584,12 +573,9 @@
 
 <div id="footer-slot"></div>
 
-<aside id="tweaks-panel" class="tweaks" aria-label="Tweaks"></aside>
-
-<script src="assets/shared.js"></script>
+<script src="shared.js"></script>
 <script>
   mountLayout('projects');
-  // Filter
   document.querySelectorAll("#filters .filter").forEach(btn => {
     btn.addEventListener("click", () => {
       document.querySelectorAll("#filters .filter").forEach(b => b.classList.remove("active"));
