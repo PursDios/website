@@ -345,23 +345,19 @@
   .ideas-list {
     list-style: none;
     margin-top: 32px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
   }
-  @media (max-width: 900px) { .ideas-list { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .ideas-list { grid-template-columns: 1fr; } }
   .ideas-list li {
-    padding: 16px;
-    border: 1px dashed var(--line-soft);
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line-soft);
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 13px;
   }
   .ideas-list li .name { color: var(--fg); line-height: 1.5; }
-  .ideas-list li .note { color: var(--fg-mute); font-size: 11px; }
+  .ideas-list li .note { color: var(--fg-mute); font-size: 11px; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -602,11 +598,41 @@
     { name: "website that calculates your odds of surviving the first encounter in any TTRPG module you link", note: "doomed // statistically" },
     { name: "playlist generator that matches BPM to your code's current error rate", note: "deranged // musical" },
     { name: "app that tells you if your side project idea already exists and is wildly successful", note: "demotivational // accurate" },
+    { name: "app that judges how long you've been lying in bed based on your phone's orientation history", note: "shameful // accurate" },
+    { name: "AI that rewrites your grocery list in the voice of a Victorian explorer discovering new lands", note: "colonial eggs // weekly use" },
+    { name: "browser extension that replaces every LinkedIn post with an equally hollow one from a random industry", note: "cathartic // necessary" },
+    { name: "generator that names your houseplants based on their vibe and assigns them trauma backstories", note: "gerald // he's tired" },
+    { name: "app that determines which specific Greek myth you are currently living through", note: "probably Sisyphus // correct" },
+    { name: "AI that writes passive-aggressive meeting agendas for meetings that could have been emails", note: "actionable // weaponised" },
+    { name: "tool that assigns everyone in your contacts list a Hogwarts house based purely on their texting habits", note: "your mum is Slytherin // she is" },
+    { name: "Chrome extension that adds a 10-second loading screen to any website you visit too often", note: "self-harm // behaviour change" },
+    { name: "AI that reads your Spotify listening history and tells you what you're currently avoiding dealing with", note: "therapy // cheaper though" },
+    { name: "random dinner decider that argues with itself for 3 minutes before choosing the same thing as always", note: "pasta // it's pasta" },
+    { name: "app that converts your workout stats into the equivalent of some extremely pointless historical feat", note: "jogged to Bruges // mostly flat" },
+    { name: "generator that writes formal legal disclaimers for things you say casually to friends", note: "liability // just in case" },
+    { name: "AI that rewrites your to-do list as if it were a doomed Antarctic expedition log", note: "day 3: the laundry // grim" },
+    { name: "app that generates fake urgent Slack messages so you have an excuse to leave social situations", note: "escape hatch // ethical?" },
+    { name: "tool that analyses your fridge contents and tells you what kind of person you've become", note: "hot sauce only // oh no" },
+    { name: "AI that writes Yelp reviews for things that don't have Yelp pages, like specific park benches", note: "4 stars // slightly damp" },
+    { name: "browser extension that converts all prices into equivalent amounts of coffee or bubble tea", note: "32 lattes // for a jacket" },
+    { name: "app that schedules your doomscrolling sessions as if they were legitimate calendar appointments", note: "9am: despair // recurring" },
+    { name: "generator that writes the Wikipedia disambiguation page for your name as if you were already famous", note: "manifesting // you may also be a ship" },
+    { name: "AI that narrates your commute in the style of a David Attenborough nature documentary", note: "the businessman // seeks a seat" },
+    { name: "app that converts your text messages into the equivalent letter you'd have sent in 1843", note: "quill required // dramatic" },
+    { name: "tool that assigns your personal era name every week based on what music and food you consumed", note: "the sad soup era // accurate" },
+    { name: "AI that turns your search history into a fever dream short story with no explanation", note: "do not share // do not publish" },
+    { name: "app that writes increasingly dramatic countdown timers for mundane events like toast popping up", note: "T-minus 4 seconds // critical" },
+    { name: "generator that invents plausible-sounding ancestors for you based on your surname and vibe", note: "probably a rogue // or a cobbler" },
+    { name: "AI that rewrites your CV using only words that could also describe a weather event", note: "turbulent growth // high pressure role" },
+    { name: "app that tells you which minor side character from a random novel best represents your current energy", note: "you are Tom // not the main Tom" },
+    { name: "browser extension that adds a theatrical drumroll sound before revealing any price on a shopping site", note: "preparation // grieving" },
+    { name: "AI that generates wildly specific horoscopes based only on what you had for breakfast", note: "cereal: chaos // eggs: transformation" },
+    { name: "tool that converts your unread email count into increasingly apocalyptic threat levels", note: "1,847: extinction // it me" },
   ];
   (function() {
     const list = document.getElementById("ideas-list");
     if (!list) return;
-    [...IDEAS].sort(() => Math.random() - 0.5).slice(0, 5).forEach(idea => {
+    [...IDEAS].sort(() => Math.random() - 0.5).slice(0, 8).forEach(idea => {
       const li = document.createElement("li");
       li.innerHTML = `<span class="name">— ${idea.name}</span><span class="note">${idea.note}</span>`;
       list.appendChild(li);
