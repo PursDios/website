@@ -140,6 +140,77 @@
   }
   .project-visual .tag-label em { color: var(--accent); font-style: normal; }
 
+  .vis-grimoire {
+    background: var(--bg-elev);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+  }
+  .grimoire-card {
+    width: 100%;
+    border: 1px solid var(--line);
+    background: var(--bg-elev-2);
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  .gc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 12px 14px 10px;
+    border-bottom: 1px solid var(--accent);
+    background: oklch(0.88 0.18 130 / 0.06);
+  }
+  .gc-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--fg);
+    font-weight: 500;
+  }
+  .gc-school {
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+  .gc-row {
+    display: flex;
+    gap: 12px;
+    padding: 5px 14px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .gc-key {
+    color: var(--fg-mute);
+    width: 72px;
+    flex-shrink: 0;
+    letter-spacing: 0.04em;
+  }
+  .gc-val { color: var(--fg-dim); }
+  .gc-val.accent { color: var(--accent); }
+  .gc-divider { height: 1px; background: var(--line); margin: 4px 0; }
+  .gc-desc {
+    padding: 8px 14px;
+    color: var(--fg-dim);
+    line-height: 1.6;
+    font-size: 11px;
+  }
+  .gc-em { color: var(--fg); }
+  .gc-tags {
+    display: flex;
+    gap: 6px;
+    padding: 8px 14px 12px;
+  }
+  .gc-tag {
+    font-size: 10px;
+    color: var(--fg-mute);
+    border: 1px solid var(--line);
+    padding: 2px 7px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
   .vis-harrow { background: var(--bg-elev); }
   .vis-harrow .row-labels {
     position: absolute;
@@ -411,25 +482,27 @@
         <a href="https://grandgrimoire.co.uk" class="btn primary" target="_blank" rel="noopener">Open GrandGrimoire →</a>
       </div>
     </div>
-    <div class="project-visual vis-harrow">
+    <div class="project-visual vis-grimoire">
       <span class="corner tl"></span><span class="corner tr"></span>
       <span class="corner bl"></span><span class="corner br"></span>
-      <span class="tag-label"><em>◆</em> spell reference — live</span>
-      <div class="row-labels">
-        <span>spells</span>
-        <span>items</span>
-        <span>rules</span>
-      </div>
-      <div class="cards">
-        <div class="card glow">✦</div>
-        <div class="card">◈</div>
-        <div class="card">☽</div>
-        <div class="card">◇</div>
-        <div class="card glow">☉</div>
-        <div class="card">✶</div>
-        <div class="card">◉</div>
-        <div class="card">✧</div>
-        <div class="card glow">♆</div>
+      <span class="tag-label"><em>◆</em> spell entry — fireball</span>
+      <div class="grimoire-card">
+        <div class="gc-header">
+          <span class="gc-name">Fireball</span>
+          <span class="gc-school">Evocation</span>
+        </div>
+        <div class="gc-row"><span class="gc-key">Level</span><span class="gc-val">Sorcerer/Wizard 3</span></div>
+        <div class="gc-row"><span class="gc-key">Cast Time</span><span class="gc-val">1 standard action</span></div>
+        <div class="gc-row"><span class="gc-key">Range</span><span class="gc-val">Long (400 ft + 40 ft/level)</span></div>
+        <div class="gc-row"><span class="gc-key">Area</span><span class="gc-val">20-ft-radius spread</span></div>
+        <div class="gc-row"><span class="gc-key">Save</span><span class="gc-val accent">Reflex half</span></div>
+        <div class="gc-divider"></div>
+        <div class="gc-desc">A burst of flame deals <span class="gc-em">1d6 fire damage/level</span> to all creatures in the area.</div>
+        <div class="gc-tags">
+          <span class="gc-tag">fire</span>
+          <span class="gc-tag">damage</span>
+          <span class="gc-tag">aoe</span>
+        </div>
       </div>
     </div>
   </article>
