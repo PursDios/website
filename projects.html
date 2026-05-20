@@ -371,9 +371,9 @@
       <h1 style="margin-top: 16px;">Things I'm<br/>tinkering with<em>.</em></h1>
     </div>
     <div class="meta">
-      <div><strong>Total</strong> — 3 projects, 0 shipped</div>
-      <div><strong>Currently</strong> — Harrowing</div>
-      <div><strong>Stack</strong> — Laravel + Livewire, mostly</div>
+      <div><strong>Total</strong> — 4 projects, 3 shipped</div>
+      <div><strong>Currently</strong> — GrandGrimoire</div>
+      <div><strong>Stack</strong> — Laravel + Vue, mostly</div>
     </div>
   </div>
 
@@ -385,11 +385,60 @@
     <button class="filter" data-filter="joke">Just for fun</button>
   </div>
 
-  <article class="project" id="harrowing" data-status="wip">
+  <article class="project" id="grandgrimoire" data-status="live">
     <div>
       <div class="project-meta">
-        <span><span class="dot wip"></span> in progress</span>
+        <span><span class="dot live"></span> live</span>
         <span>/ 01</span>
+        <span>ttrpg · reference · web app</span>
+      </div>
+      <h2>GrandGrimoire</h2>
+      <div class="sub">grandgrimoire.co.uk</div>
+      <p>
+        A clean, fast reference tool for TTRPG spells, items, and rules — built for
+        players who want the answer in two seconds, not four scrolls.
+      </p>
+      <p class="dim">
+        Laravel on the backend, Vue on the front. The kind of project that starts as
+        "I'll just look this up quickly" and ends as a full-featured reference site.
+      </p>
+      <div class="stack">
+        <span class="tag">Laravel</span>
+        <span class="tag">Vue</span>
+        <span class="tag">MySQL</span>
+      </div>
+      <div class="actions">
+        <a href="https://grandgrimoire.co.uk" class="btn primary" target="_blank" rel="noopener">Open GrandGrimoire →</a>
+      </div>
+    </div>
+    <div class="project-visual vis-harrow">
+      <span class="corner tl"></span><span class="corner tr"></span>
+      <span class="corner bl"></span><span class="corner br"></span>
+      <span class="tag-label"><em>◆</em> spell reference — live</span>
+      <div class="row-labels">
+        <span>spells</span>
+        <span>items</span>
+        <span>rules</span>
+      </div>
+      <div class="cards">
+        <div class="card glow">✦</div>
+        <div class="card">◈</div>
+        <div class="card">☽</div>
+        <div class="card">◇</div>
+        <div class="card glow">☉</div>
+        <div class="card">✶</div>
+        <div class="card">◉</div>
+        <div class="card">✧</div>
+        <div class="card glow">♆</div>
+      </div>
+    </div>
+  </article>
+
+  <article class="project" id="harrowing" data-status="live">
+    <div>
+      <div class="project-meta">
+        <span><span class="dot live"></span> live</span>
+        <span>/ 02</span>
         <span>pathfinder · ttrpg · web</span>
       </div>
       <h2>Harrowing</h2>
@@ -439,29 +488,29 @@
   <article class="project" id="bidding" data-status="planned">
     <div>
       <div class="project-meta">
-        <span><span class="dot planned"></span> planned</span>
-        <span>/ 02</span>
+        <span><span class="dot planned"></span> early planning</span>
+        <span>/ 04</span>
         <span>auctions · real-time · backend</span>
       </div>
       <h2>biddingTest</h2>
-      <div class="sub">biddingtest.ryancooper.co.uk</div>
+      <div class="sub">not live yet</div>
       <p>
         An unglamorous auction sandbox. Start a room, set rules (English, Dutch,
         sealed-bid), watch the bids roll in, see what the edge cases actually do at 3am
         when two bots disagree about the tick-size.
       </p>
       <p class="dim">
-        Not a product. A place to understand. I'd rather get the mechanics right in a toy
-        than wrong in a real codebase.
+        Not a product. A place to understand. Being built in Go — I'd rather learn the
+        concurrency model properly in a toy than discover its limits in a real codebase.
+        Not ready at all yet.
       </p>
       <div class="stack">
-        <span class="tag">Laravel</span>
-        <span class="tag">Livewire</span>
-        <span class="tag">Reverb</span>
+        <span class="tag">Go</span>
+        <span class="tag">WebSockets</span>
         <span class="tag">MySQL</span>
       </div>
       <div class="actions">
-        <a href="#" class="btn">Coming soon →</a>
+        <a href="#" class="btn">Not yet →</a>
       </div>
     </div>
     <div class="project-visual vis-bid">
@@ -485,10 +534,10 @@
     </div>
   </article>
 
-  <article class="project" id="lolbuy" data-status="joke wip">
+  <article class="project" id="lolbuy" data-status="joke live">
     <div>
       <div class="project-meta">
-        <span><span class="dot wip"></span> in progress / very silly</span>
+        <span><span class="dot live"></span> live / very silly</span>
         <span>/ 03</span>
         <span>e-commerce · dark patterns · satire</span>
       </div>
@@ -510,7 +559,7 @@
         <span class="tag">Intentional chaos</span>
       </div>
       <div class="actions">
-        <a href="https://pursdios.github.io/Lolbuy/#/" class="btn">Open LolBuy →</a>
+        <a href="https://pursdios.github.io/Lolbuy/#/" class="btn primary">Open LolBuy →</a>
       </div>
     </div>
     <div class="project-visual vis-lol">
@@ -560,7 +609,7 @@
     <ul class="ideas-list" id="ideas-list"></ul>
   </div>
 
-  <div style="padding: 60px 0 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+  <div style="padding: 60px 0 80px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
     <h3>Have a small thing you want built?</h3>
     <a href="contact.html" class="btn primary">Say hi →</a>
   </div>
