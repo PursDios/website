@@ -52,7 +52,7 @@
   .channels {
     padding: 64px 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
   @media (max-width: 900px) { .channels { grid-template-columns: 1fr; } }
@@ -148,69 +148,6 @@
   .response-cell h3 { margin-bottom: 8px; }
   .response-cell p { color: var(--fg-dim); font-size: 15px; }
 
-  .cv-block {
-    padding: 60px 0;
-    border-top: 1px solid var(--line-soft);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
-  }
-  @media (max-width: 800px) { .cv-block { grid-template-columns: 1fr; } }
-  .cv-block h2 { font-size: clamp(32px, 4vw, 44px); }
-  .cv-preview {
-    aspect-ratio: 3 / 4;
-    max-width: 280px;
-    background: var(--bg-elev);
-    border: 1px solid var(--line-soft);
-    position: relative;
-    padding: 24px;
-    font-family: var(--font-mono);
-    font-size: 7px;
-    line-height: 1.8;
-    color: var(--fg-mute);
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    transform: rotate(-2deg);
-    margin: 0 auto;
-  }
-  .cv-preview::before {
-    content: "RYAN COOPER";
-    font-family: var(--font-display);
-    font-size: 14px;
-    color: var(--fg);
-    display: block;
-    margin-bottom: 2px;
-    letter-spacing: 0.02em;
-  }
-  .cv-preview::after {
-    content: "senior software engineer";
-    font-family: var(--font-mono);
-    font-size: 7px;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 16px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  .cv-preview .ln {
-    display: block;
-    height: 4px;
-    background: var(--line-soft);
-    margin-bottom: 4px;
-  }
-  .cv-preview .ln.short { width: 40%; }
-  .cv-preview .ln.mid { width: 70%; }
-  .cv-preview .ln.full { width: 100%; }
-  .cv-preview .heading {
-    display: block;
-    color: var(--accent);
-    font-size: 8px;
-    letter-spacing: 0.12em;
-    margin: 10px 0 4px;
-    text-transform: uppercase;
-  }
-
   .signoff {
     padding: 80px 0 20px;
     text-align: center;
@@ -227,31 +164,6 @@
     letter-spacing: -0.02em;
   }
   .signoff .big em { color: var(--accent); font-style: italic; font-weight: 400; }
-
-  .status-avail {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--fg-dim);
-    margin-top: 24px;
-    letter-spacing: 0.04em;
-  }
-  .status-avail .pulse {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--accent);
-    position: relative;
-  }
-  .status-avail .pulse::after {
-    content: "";
-    position: absolute; inset: 0;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(3); opacity: 0; }
-  }
 </style>
 </head>
 <body>
@@ -265,13 +177,9 @@
       <h1 style="margin-top: 16px;">Roll for<br/>perception<em>.</em></h1>
       <p class="lead">
         If you've got a cool project, a weird idea, or a Pathfinder rules question, my
-        inbox is open. I answer most things within a day or two, and the others within
+        DMs are open. I answer most things within a day or two, and the others within
         a week — depends on the week.
       </p>
-      <div class="status-avail">
-        <span class="pulse"></span>
-        Currently open to interesting conversations.
-      </div>
     </div>
     <div class="panel">
       <div class="label">Signal check</div>
@@ -284,20 +192,9 @@
   </div>
 
   <div class="channels">
-    <a href="mailto:Cooper.ryan0942@gmail.com" class="channel">
-      <div class="head">
-        <span>01 / mail</span>
-        <span class="glyph">✉</span>
-      </div>
-      <div>
-        <h3>Email</h3>
-        <div class="handle">Cooper.ryan0942@gmail.com</div>
-        <div class="arrow">send a message →</div>
-      </div>
-    </a>
     <a href="https://github.com/PursDios" class="channel">
       <div class="head">
-        <span>02 / github</span>
+        <span>01 / github</span>
         <span class="glyph">⌥</span>
       </div>
       <div>
@@ -308,7 +205,7 @@
     </a>
     <a href="https://www.linkedin.com/in/ryan-cooper-4218b9153/" class="channel">
       <div class="head">
-        <span>03 / formal</span>
+        <span>02 / formal</span>
         <span class="glyph">◈</span>
       </div>
       <div>
@@ -329,37 +226,6 @@
       <div class="label">bad reasons to write</div>
       <h3>Probably not.</h3>
       <p>Cold "opportunities" that require a 30-minute call to explain. Anything involving the words "rockstar" or "ninja" unironically. Crypto. You know.</p>
-    </div>
-  </div>
-
-  <div class="cv-block">
-    <div>
-      <span class="kicker">Paperwork</span>
-      <h2 style="margin-top: 16px;">Need the CV?</h2>
-      <p style="margin-top: 16px;">
-        A tidy one-pager covering roles, tools, and the short version of the timeline on
-        the About page. PDF, dark-theme version also available on request.
-      </p>
-      <div class="row" style="margin-top: 28px;">
-        <a href="Ryan_Cooper_CV.pdf" class="btn primary" download>Download PDF →</a>
-        <a href="about.html" class="btn">See timeline →</a>
-      </div>
-    </div>
-    <div class="cv-preview">
-      <span class="ln full"></span>
-      <span class="ln mid"></span>
-      <span class="heading">experience</span>
-      <span class="ln full"></span>
-      <span class="ln full"></span>
-      <span class="ln short"></span>
-      <span class="ln mid"></span>
-      <span class="ln full"></span>
-      <span class="heading">skills</span>
-      <span class="ln full"></span>
-      <span class="ln mid"></span>
-      <span class="heading">projects</span>
-      <span class="ln full"></span>
-      <span class="ln short"></span>
     </div>
   </div>
 
